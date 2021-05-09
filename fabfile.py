@@ -83,7 +83,7 @@ def symlink(pool, c):
 
 def symlink_uploads(pool, c):
     pool.run(
-        f"ln -s /srv/{c.config.app_name}/etc/uploads/* {c.config.current_release}/src/uploads/"
+        f"ln -s /srv/{c.config.app_name}/etc/uploads/* {c.config.current_release}/dist/uploads/"
     )
 
 
