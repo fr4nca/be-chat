@@ -13,8 +13,8 @@ def production(c):
     c.config["releases_path"] = f"/srv/{c.config.app_name}/www/releases"
     c.config["shared_path"] = f"/srv/{c.config.app_name}/www/shared"
     c.config["shared_files"] = [
-        "/src/config/config.py",
-        "/src/config/database.py",
+        "src/config/config.py",
+        "src/config/database.py",
     ]
     c.config["git_origin"] = "gitea@gitea.cloudez.io:cloudez/deadpool.git"
     c.config["git_branch"] = "main"
