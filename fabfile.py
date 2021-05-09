@@ -68,7 +68,7 @@ def shared(pool, c):
 
 def project_requirements(pool, c):
     # update python package
-    command = f"source {c.config.virtual}; cd {c.config.current_release}; yarn; yarn build; yarn sequelize db:migrate;"
+    command = f"source {c.config.virtual}; cd {c.config.current_release}; yarn; yarn build; yarn sequelize db:migrate; cd dist; mkdir uploads;"
 
     pool.run(command, shell="/bin/bash")
 
@@ -83,7 +83,7 @@ def symlink(pool, c):
 
 def symlink_uploads(pool, c):
     pool.run(
-        f"ln -nfs /srv/{c.config.app_name}/etc/uploads {c.config.current_release}/src/uploads"
+        f"ln -nfs /srv/{c.config.app_name}/etc/uploads/* {c.config.current_release}/src/uploads/"
     )
 
 
