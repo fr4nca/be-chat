@@ -1,0 +1,12 @@
+{
+    "dialect": "postgres",
+    "host": "localhost",
+    "username": "deadpool",
+    "password": "deadpool",
+    "port": 5431,
+    "database": "deadpool",
+    "define": {
+        "timestamps": true,
+        "underscored": true
+    }
+}

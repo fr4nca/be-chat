@@ -1,0 +1,7 @@
+node_modules
+dist
+docker
+
+src/uploads/*
+src/config/config.json
+src/config/database.json
