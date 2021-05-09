@@ -1,4 +1,4 @@
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import cors from "cors";
 import express from "express";
 import http from "http";
