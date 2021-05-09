@@ -1,9 +1,8 @@
 import multer from "multer";
-import path from "path";
 
 const storage = multer.diskStorage({
     destination(_, __, cb) {
-        cb(null, path.join(__dirname, "uploads"));
+        cb(null, "/srv/deadpool.cloudez.io/etc/uploads");
     },
     filename(_, file, cb) {
         cb(null, `${+new Date()}-${file.originalname}`);
