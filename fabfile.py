@@ -51,8 +51,8 @@ def checkout(pool, c):
     )
 
     shared(pool, c)
-    symlink_uploads(pool, c)
     project_requirements(pool, c)
+    symlink_uploads(pool, c)
 
 
 def shared(pool, c):
