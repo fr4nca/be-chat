@@ -1,19 +1,12 @@
 import http from "http";
 import { Identifier } from "sequelize/types";
-import { Server, Socket } from "socket.io";
+import { Namespace, Server, Socket } from "socket.io";
 
 import Chat from "./models/Chat";
-import { IIoServers } from "./types/types";
+import { IIoNamespaces } from "./types/types";
 
-export default (server: http.Server): IIoServers => {
-    const io = new Server(server, {
-        cors: {
-            origin: "*",
-        },
-    });
-
+const chatNamespace = (io: Server): Namespace => {
     const chatIo = io.of("/chat");
-    const notificationIo = io.of("/notification");
 
     chatIo.on("connection", async (socket: Socket) => {
         const { chat } = socket.handshake.query;
@@ -31,16 +24,19 @@ export default (server: http.Server): IIoServers => {
         }
     });
 
-    notificationIo.on("connection", async (socket: Socket) => {
-        const { user_uuid } = socket.handshake.query;
+    return chatIo;
+};
 
-        if (user_uuid) {
-            socket.join(user_uuid);
-        }
+export default (server: http.Server): IIoNamespaces => {
+    const io = new Server(server, {
+        cors: {
+            origin: "*",
+        },
     });
+
+    const chatIo = chatNamespace(io);
 
     return {
         chatIo,
-        notificationIo,
     };
 };

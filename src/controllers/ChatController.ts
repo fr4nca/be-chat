@@ -51,12 +51,6 @@ export default {
         try {
             const { chat_uuid } = req.params;
 
-            if (!chat_uuid) {
-                return res.status(400).json({
-                    message: "Chat id not found",
-                });
-            }
-
             const chat = await Chat.findOne({
                 where: {
                     id: chat_uuid,
@@ -70,7 +64,7 @@ export default {
             });
 
             if (!chat) {
-                return res.status(400).json({
+                return res.status(404).json({
                     message: "Chat not found",
                 });
             }

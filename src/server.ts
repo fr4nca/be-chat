@@ -6,7 +6,7 @@ import path from "path";
 import createIo from "./io";
 import chatRoutes from "./routes/chats.routes";
 import messageRoutes from "./routes/messages.routes";
-import { IRequest } from "./types/request";
+import { IRequest } from "./types/types";
 
 import "./database";
 
@@ -18,11 +18,11 @@ app.use(express.json());
 
 const server = http.createServer(app);
 
-const { chatIo, notificationIo } = createIo(server);
+const { chatIo } = createIo(server);
 
-app.use((req: IRequest, res, next) => {
+app.use((req: IRequest, _, next) => {
     req.chatIo = chatIo;
-    req.notificationIo = notificationIo;
+
     next();
 });
 

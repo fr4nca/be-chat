@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import Chat from "../models/Chat";
+import { debug, uploadsUrl } from "../config/config.json";
 import Message from "../models/Message";
 import { IRequest } from "../types/types";
 
@@ -13,10 +13,13 @@ export default {
             author_email,
             chat_id,
         } = req.body;
+
         const { file } = req;
 
         // TODO: save full domain path
-        const filePath = file?.filename;
+        const filePath = debug
+            ? file?.filename
+            : `${uploadsUrl}${file?.filename}`;
 
         try {
             const message = await Message.create({
@@ -31,18 +34,6 @@ export default {
             req.chatIo?.to(chat_id).emit("message", {
                 message,
             });
-
-            const chat = await Chat.findByPk(chat_id);
-            if (chat?.responsible_uuid) {
-                let to = "";
-
-                if (author_uuid === chat.owner_uuid)
-                    to = chat.responsible_uuid.toString();
-                else if (author_uuid === chat.responsible_uuid)
-                    to = chat.owner_uuid.toString();
-
-                req.notificationIo?.to(to).emit("notification");
-            }
 
             // TODO: create api Alert to notifiy message
 

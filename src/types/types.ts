@@ -3,10 +3,8 @@ import { Namespace } from "socket.io";
 
 export interface IRequest extends Request {
     chatIo?: Namespace;
-    notificationIo?: Namespace;
 }
 
-export interface IIoServers {
+export interface IIoNamespaces {
     chatIo?: Namespace;
-    notificationIo?: Namespace;
 }
