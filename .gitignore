@@ -2,6 +2,8 @@ node_modules
 dist
 docker
 
-src/uploads/
+src/uploads/*
+!src/uploads/.gitkeep 
+
 src/config/config.json
 src/config/database.json
