@@ -29,6 +29,7 @@ def deploy(c):
     checkout(pool, c)
     releases(pool, c)
     symlink(pool, c)
+    symlink_uploads(pool, c)
     cleanup(pool, c)
 
     for p in pool:
@@ -67,7 +68,7 @@ def shared(pool, c):
 
 def project_requirements(pool, c):
     # update python package
-    command = f"source {c.config.virtual}; cd {c.config.current_release}; yarn; yarn build; yarn sequelize db:migrate; cd dist; mkdir uploads;"
+    command = f"source {c.config.virtual}; cd {c.config.current_release}; yarn; yarn build; yarn sequelize db:migrate;"
 
     pool.run(command, shell="/bin/bash")
 
@@ -78,6 +79,12 @@ def releases(pool, c):
 
 def symlink(pool, c):
     pool.run(f"ln -nfs {c.config.current_release} {c.config.current_path}")
+
+
+def symlink_uploads(pool, c):
+    pool.run(
+        f"ln -nfs /srv/{c.config.app_name}/etc/uploads {c.config.current_release}/dist/uploads"
+    )
 
 
 def cleanup(pool, c):
