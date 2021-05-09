@@ -1,7 +1,7 @@
 kind: pipeline
 name: deploy production
 trigger:
-  branch: [develop]
+  branch: [main]
   event: [push]
 
 steps:
@@ -18,7 +18,7 @@ steps:
       - fab production deploy
     when:
       branch:
-        - develop
+        - main
       event:
         exclude:
           - pull_request
@@ -39,5 +39,5 @@ steps:
         {{/success}}
     when:
       branch:
-        - develop
+        - main
       status: [success, failure]
