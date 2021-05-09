@@ -8,6 +8,7 @@
         "build": "tsc"
     },
     "dependencies": {
+        "@sentry/node": "5.5.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/multer": "^1.4.5",
         "@types/socket.io": "^2.1.13",

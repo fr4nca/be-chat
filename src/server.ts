@@ -1,3 +1,4 @@
+import Sentry from "@sentry/node";
 import cors from "cors";
 import express from "express";
 import http from "http";
@@ -9,6 +10,11 @@ import messageRoutes from "./routes/messages.routes";
 import { IRequest } from "./types/types";
 
 import "./database";
+
+if (process.env.NODE_ENV !== "development")
+    Sentry.init({
+        dsn: "https://889e7976708b4603a4e7c05fe53090ad@sentry.cloudez.io/23",
+    });
 
 const app = express();
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
