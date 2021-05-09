@@ -19,7 +19,7 @@ def production(c):
     c.config["git_origin"] = "gitea@gitea.cloudez.io:cloudez/deadpool.git"
     c.config["git_branch"] = "main"
     c.config["releases_limit"] = 3
-    c.config["virtual"] = f"/srv/{c.config.app_name}/.virtualenv/3.7/bin/activate"
+    c.config["virtual"] = f"/srv/{c.config.app_name}/activate"
 
 
 @task
@@ -56,7 +56,7 @@ def checkout(pool, c):
 
 def shared(pool, c):
     if c.config.shared_files:
-        command = "ln -nfs {0}{1} {2}{1}"
+        command = "ln -nfs {0}{1} {2}/src/config{1}"
         for shared_file in c.config.shared_files:
             pool.run(
                 command.format(
