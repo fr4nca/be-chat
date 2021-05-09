@@ -56,7 +56,7 @@ def checkout(pool, c):
 
 def shared(pool, c):
     if c.config.shared_files:
-        command = "ln -nfs {0}{1} {2}/src/config{1}"
+        command = "ln -nfs {0}{1} {2}{1}"
         for shared_file in c.config.shared_files:
             pool.run(
                 command.format(
