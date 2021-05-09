@@ -29,7 +29,6 @@ def deploy(c):
     checkout(pool, c)
     releases(pool, c)
     symlink(pool, c)
-    symlink_uploads(pool, c)
     cleanup(pool, c)
 
     for p in pool:
@@ -52,6 +51,7 @@ def checkout(pool, c):
     )
 
     shared(pool, c)
+    symlink_uploads(pool, c)
     project_requirements(pool, c)
 
 
@@ -83,7 +83,7 @@ def symlink(pool, c):
 
 def symlink_uploads(pool, c):
     pool.run(
-        f"ln -nfs /srv/{c.config.app_name}/etc/uploads {c.config.current_release}/dist/uploads"
+        f"ln -nfs /srv/{c.config.app_name}/etc/uploads {c.config.current_release}/src/uploads"
     )
 
 
