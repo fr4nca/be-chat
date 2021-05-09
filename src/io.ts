@@ -3,7 +3,6 @@ import { Identifier } from "sequelize/types";
 import { Namespace, Server, Socket } from "socket.io";
 
 import Chat from "./models/Chat";
-import { IIoNamespaces } from "./types/types";
 
 const chatNamespace = (io: Server): Namespace => {
     const chatIo = io.of("/chat");
@@ -27,7 +26,7 @@ const chatNamespace = (io: Server): Namespace => {
     return chatIo;
 };
 
-export default (server: http.Server): IIoNamespaces => {
+export default (server: http.Server): Namespace[] => {
     const io = new Server(server, {
         cors: {
             origin: "*",
@@ -36,7 +35,5 @@ export default (server: http.Server): IIoNamespaces => {
 
     const chatIo = chatNamespace(io);
 
-    return {
-        chatIo,
-    };
+    return [chatIo];
 };

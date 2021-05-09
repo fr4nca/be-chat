@@ -24,7 +24,7 @@ app.use(express.json());
 
 const server = http.createServer(app);
 
-const { chatIo } = createIo(server);
+const [chatIo] = createIo(server);
 
 app.use((req: IRequest, _, next) => {
     req.chatIo = chatIo;
