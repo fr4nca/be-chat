@@ -1,5 +1,7 @@
+import axios from "axios";
 import { Response } from "express";
 
+import { apiUrl } from "../config/config.json";
 import Chat from "../models/Chat";
 import Message from "../models/Message";
 import { IRequest } from "../types/types";
@@ -72,6 +74,71 @@ export default {
             }
 
             return res.json(chat);
+        } catch (e) {
+            return res.status(400).json({
+                message: e.message,
+            });
+        }
+    },
+    async destroy(req: IRequest, res: Response): Promise<Response> {
+        try {
+            const { chat_uuid } = req.params;
+
+            const chat = await Chat.findOne({
+                where: {
+                    id: chat_uuid,
+                },
+            });
+
+            if (!chat) {
+                return res.status(404).json({
+                    message: "Chat not found",
+                });
+            }
+
+            chat.open = false;
+
+            chat.save();
+
+            return res.json(chat);
+        } catch (e) {
+            return res.status(400).json({
+                message: e.message,
+            });
+        }
+    },
+    async scale(req: IRequest, res: Response): Promise<Response> {
+        try {
+            const { chat_uuid } = req.params;
+
+            const chat = await Chat.findOne({
+                where: {
+                    id: chat_uuid,
+                },
+            });
+
+            if (!chat) {
+                return res.status(404).json({
+                    message: "Chat not found",
+                });
+            }
+
+            const payload = {
+                owner: chat.owner_uuid,
+                summary: chat.summary,
+                team: chat.team,
+                target_id: chat.resource_id,
+                target_type: chat.resource_type,
+                // TODO: append all messages with time
+            };
+
+            const { data } = await axios.post(`${apiUrl}/v3/ticket/`, payload, {
+                headers: {
+                    Authorization: `jwt ${req.headers.authorization}`,
+                },
+            });
+
+            return res.json(data);
         } catch (e) {
             return res.status(400).json({
                 message: e.message,

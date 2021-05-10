@@ -38,7 +38,6 @@ export default (server: http.Server): Namespace[] => {
     });
 
     // eslint-disable-next-line consistent-return
-
     io.use((socket, next) => {
         if (!socket.handshake.auth.token) {
             return next(new Error("Unauthorized"));

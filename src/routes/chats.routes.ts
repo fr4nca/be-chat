@@ -5,10 +5,10 @@ import ChatController from "../controllers/ChatController";
 const router = Router();
 
 router.get("/", ChatController.list);
-router.get("/:chat_uuid", ChatController.retrieve);
 router.post("/", ChatController.store);
 
-// TODO: delete route to close chat
-// TODO: create ticket for chat route / escalate chat
+router.get("/:chat_uuid", ChatController.retrieve);
+router.delete("/:chat_uuid", ChatController.destroy);
+router.post("/:chat_uuid/scale", ChatController.scale);
 
 export default router;

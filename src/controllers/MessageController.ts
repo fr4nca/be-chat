@@ -16,7 +16,6 @@ export default {
 
         const { file } = req;
 
-        // TODO: save full domain path
         const filePath = file ? `${uploadsUrl}${file?.filename}` : undefined;
 
         try {
