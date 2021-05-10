@@ -9,6 +9,7 @@ export default {
         const {
             summary,
             owner_uuid,
+            owner_email,
             company_uuid,
             team,
             resource_id,
@@ -19,6 +20,7 @@ export default {
             const chat = await Chat.create({
                 summary,
                 owner_uuid,
+                owner_email,
                 company_uuid,
                 team,
                 resource_id,

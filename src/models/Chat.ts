@@ -10,6 +10,7 @@ interface IChatAttributes {
 
     summary: string;
     owner_uuid: number;
+    owner_email: string;
     company_uuid: number;
     team: number;
     resource_id: number;
@@ -26,6 +27,7 @@ class Chat
     implements IChatAttributes {
     public id!: number;
     public owner_uuid!: number;
+    public owner_email!: string;
     public company_uuid!: number;
     public responsible_uuid!: number;
     public summary!: string;
@@ -46,6 +48,7 @@ Chat.init(
             defaultValue: DataTypes.UUIDV4,
         },
         owner_uuid: DataTypes.UUID,
+        owner_email: DataTypes.STRING,
         company_uuid: DataTypes.UUID,
         responsible_uuid: DataTypes.UUID,
         summary: DataTypes.STRING,

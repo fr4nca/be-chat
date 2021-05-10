@@ -15,6 +15,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const server = http.createServer(app);
 
@@ -32,8 +33,6 @@ app.use((req: IRequest, res: Response, next) => {
 
     next();
 });
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // TODO: add validation https://express-validator.github.io/docs/
 app.use("/chat", chatRoutes);

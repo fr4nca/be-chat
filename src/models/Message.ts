@@ -7,7 +7,7 @@ interface IMessageAttributes {
     id: number;
     chat_id: number;
     text: string;
-    file: string;
+    file?: string;
     author_uuid: number;
     author_name: string;
     author_email: string;

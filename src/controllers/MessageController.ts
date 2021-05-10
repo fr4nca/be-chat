@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import { debug, uploadsUrl } from "../config/config.json";
+import { uploadsUrl } from "../config/config.json";
 import Message from "../models/Message";
 import { IRequest } from "../types/types";
 
@@ -17,9 +17,7 @@ export default {
         const { file } = req;
 
         // TODO: save full domain path
-        const filePath = debug
-            ? file?.filename
-            : `${uploadsUrl}${file?.filename}`;
+        const filePath = file ? `${uploadsUrl}${file?.filename}` : undefined;
 
         try {
             const message = await Message.create({
