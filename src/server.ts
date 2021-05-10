@@ -1,5 +1,5 @@
 import cors from "cors";
-import express, { Request, Response } from "express";
+import express, { Response } from "express";
 import http from "http";
 import path from "path";
 
@@ -20,18 +20,14 @@ const server = http.createServer(app);
 
 const [chatIo] = createIo(server);
 
-app.use((req: Request, res: Response, next): Response | undefined => {
+// pass io connections through to routes
+// eslint-disable-next-line consistent-return
+app.use((req: IRequest, res: Response, next) => {
     if (!req.headers.authorization) {
         return res.status(401).json({
             error: "Unauthorized",
         });
     }
-
-    next();
-});
-
-// pass io connections through to routes
-app.use((req: IRequest, _, next) => {
     req.chatIo = chatIo;
 
     next();
