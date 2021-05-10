@@ -45,8 +45,6 @@ export default {
         }
     },
     async file(req: IRequest, res: Response): Promise<Response> {
-        console.log(req.file);
-
         return res.send(200);
     },
 };

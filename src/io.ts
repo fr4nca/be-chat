@@ -17,6 +17,10 @@ const chatNamespace = (io: Server): Namespace => {
                 if (instance) {
                     socket.join(chat);
                 }
+
+                socket.on("typing", (data) => {
+                    socket.to(chat).emit("typing", data);
+                });
             } catch (e) {
                 console.log(e);
             }

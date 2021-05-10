@@ -1,5 +1,5 @@
 import cors from "cors";
-import express from "express";
+import express, { Request, Response } from "express";
 import http from "http";
 import path from "path";
 
@@ -20,6 +20,16 @@ const server = http.createServer(app);
 
 const [chatIo] = createIo(server);
 
+app.use((req: Request, res: Response, next): Response | undefined => {
+    if (!req.headers.authorization) {
+        return res.status(401).json({
+            error: "Unauthorized",
+        });
+    }
+
+    next();
+});
+
 // pass io connections through to routes
 app.use((req: IRequest, _, next) => {
     req.chatIo = chatIo;
@@ -28,6 +38,8 @@ app.use((req: IRequest, _, next) => {
 });
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// TODO: add validation https://express-validator.github.io/docs/
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
 
