@@ -12,11 +12,7 @@ const chatNamespace = (io: Server): Namespace => {
 
         if (chat) {
             try {
-                const instance = await Chat.findByPk(chat as Identifier);
-
-                if (instance) {
-                    socket.join(chat);
-                }
+                socket.join(chat);
 
                 socket.on("typing", (data) => {
                     socket.to(chat).emit("typing", data);
@@ -28,6 +24,31 @@ const chatNamespace = (io: Server): Namespace => {
     });
 
     return chatIo;
+};
+
+const staffNamespace = (io: Server): Namespace => {
+    const staffIo = io.of("/staff");
+
+    staffIo.on("connection", async (socket: Socket) => {
+        const { isStaff } = socket.handshake.query;
+        const room = "staff";
+
+        if (isStaff) socket.join(room);
+    });
+
+    return staffIo;
+};
+
+const notificationNamespace = (io: Server): Namespace => {
+    const notificationIo = io.of("/notification");
+
+    notificationIo.on("connection", async (socket: Socket) => {
+        const { uuid } = socket.handshake.query;
+
+        if (uuid) socket.join(uuid);
+    });
+
+    return notificationIo;
 };
 
 export default (server: http.Server): Namespace[] => {
@@ -46,6 +67,8 @@ export default (server: http.Server): Namespace[] => {
     });
 
     const chatIo = chatNamespace(io);
+    const staffIo = staffNamespace(io);
+    const notificationIo = notificationNamespace(io);
 
-    return [chatIo];
+    return [chatIo, staffIo, notificationIo];
 };

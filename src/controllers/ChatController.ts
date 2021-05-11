@@ -12,6 +12,7 @@ export default {
             summary,
             owner_uuid,
             owner_email,
+            owner_name,
             company_uuid,
             team,
             resource_id,
@@ -23,13 +24,16 @@ export default {
                 summary,
                 owner_uuid,
                 owner_email,
+                owner_name,
                 company_uuid,
                 team,
                 resource_id,
                 resource_type,
             });
 
-            // TODO: create api Alert to notifiy chat
+            const room = "staff";
+
+            req.staffIo?.to(room).emit("new chat", chat);
 
             return res.json(chat);
         } catch (e) {
@@ -115,6 +119,20 @@ export default {
                 where: {
                     id: chat_uuid,
                 },
+                include: [
+                    {
+                        model: Message,
+                        as: "messages",
+                    },
+                ],
+            });
+
+            let text = "";
+
+            chat?.messages.forEach((message) => {
+                text += `\n*${
+                    message.author_name
+                }* (${message.createdAt.toLocaleString()}): ${message.text}`;
             });
 
             if (!chat) {
@@ -129,7 +147,8 @@ export default {
                 team: chat.team,
                 target_id: chat.resource_id,
                 target_type: chat.resource_type,
-                // TODO: append all messages with time
+                is_lv1_support: true,
+                text,
             };
 
             const { data } = await axios.post(`${apiUrl}/v3/ticket/`, payload, {

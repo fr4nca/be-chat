@@ -6,6 +6,7 @@ import path from "path";
 import createIo from "./io";
 import chatRoutes from "./routes/chats.routes";
 import messageRoutes from "./routes/messages.routes";
+import notificationRoutes from "./routes/notifications.routes";
 import { IRequest } from "./types/types";
 
 import "./database";
@@ -16,10 +17,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 const server = http.createServer(app);
 
-const [chatIo] = createIo(server);
+const [chatIo, staffIo, notificationIo] = createIo(server);
 
 // pass io connections through to routes
 // eslint-disable-next-line consistent-return
@@ -30,6 +32,8 @@ app.use((req: IRequest, res: Response, next) => {
         });
     }
     req.chatIo = chatIo;
+    req.staffIo = staffIo;
+    req.notificationIo = notificationIo;
 
     next();
 });
@@ -37,5 +41,6 @@ app.use((req: IRequest, res: Response, next) => {
 // TODO: add validation https://express-validator.github.io/docs/
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
+app.use("/notification", notificationRoutes);
 
 server.listen("3333", () => console.log("Server is running"));

@@ -2,6 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 
 import sequelize from "../database";
 import Message from "./Message";
+import Notification from "./Notification";
 
 interface IChatAttributes {
     id: number;
@@ -11,15 +12,18 @@ interface IChatAttributes {
     summary: string;
     owner_uuid: number;
     owner_email: string;
+    owner_name: string;
     company_uuid: number;
     team: number;
     resource_id: number;
     resource_type: string;
+
+    messages?: Message[];
 }
 
 type ChatCreationAttributes = Optional<
     IChatAttributes,
-    "id" | "responsible_uuid" | "open"
+    "id" | "responsible_uuid" | "open" | "messages"
 >;
 
 class Chat
@@ -28,6 +32,7 @@ class Chat
     public id!: number;
     public owner_uuid!: number;
     public owner_email!: string;
+    public owner_name!: string;
     public company_uuid!: number;
     public responsible_uuid!: number;
     public summary!: string;
@@ -35,6 +40,7 @@ class Chat
     public resource_id!: number;
     public team!: number;
     public open!: boolean;
+    public messages!: Message[];
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -49,6 +55,7 @@ Chat.init(
         },
         owner_uuid: DataTypes.UUID,
         owner_email: DataTypes.STRING,
+        owner_name: DataTypes.STRING,
         company_uuid: DataTypes.UUID,
         responsible_uuid: DataTypes.UUID,
         summary: DataTypes.STRING,
@@ -65,6 +72,11 @@ Chat.init(
 Chat.hasMany(Message, {
     foreignKey: "chat_id",
     as: "messages",
+});
+
+Chat.hasMany(Notification, {
+    foreignKey: "chat_id",
+    as: "notifications",
 });
 
 export default Chat;

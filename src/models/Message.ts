@@ -29,6 +29,7 @@ class Message
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
+
 Message.init(
     {
         id: {
