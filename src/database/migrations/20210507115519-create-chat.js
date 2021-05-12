@@ -24,15 +24,15 @@ module.exports = {
             },
             resource_type: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             resource_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             team: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             open: {
                 type: Sequelize.BOOLEAN,

@@ -23,7 +23,13 @@ interface IChatAttributes {
 
 type ChatCreationAttributes = Optional<
     IChatAttributes,
-    "id" | "responsible_uuid" | "open" | "messages"
+    | "id"
+    | "responsible_uuid"
+    | "open"
+    | "messages"
+    | "resource_id"
+    | "resource_type"
+    | "team"
 >;
 
 class Chat
