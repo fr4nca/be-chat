@@ -46,6 +46,7 @@ export default {
         try {
             const chats = await Chat.findAll({
                 where: req.query,
+                order: [["created_at", "DESC"]],
             });
 
             return res.json(chats);
@@ -130,9 +131,8 @@ export default {
             let text = "";
 
             chat?.messages.forEach((message) => {
-                text += `\n*${
-                    message.author_name
-                }* (${message.createdAt.toLocaleString()}): ${message.text}`;
+                text += `\n*${message.author_name
+                    }* (${message.createdAt.toLocaleString()}): ${message.text}`;
             });
 
             if (!chat) {
