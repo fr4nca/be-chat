@@ -26,16 +26,16 @@ const [chatIo, staffIo, notificationIo] = createIo(server);
 // pass io connections through to routes
 // eslint-disable-next-line consistent-return
 app.use((req: IRequest, res: Response, next) => {
-    if (!req.headers.authorization) {
-        return res.status(401).json({
-            error: "Unauthorized",
-        });
-    }
-    req.chatIo = chatIo;
-    req.staffIo = staffIo;
-    req.notificationIo = notificationIo;
+  if (!req.headers.authorization) {
+    return res.status(401).json({
+      error: "Unauthorized",
+    });
+  }
+  req.chatIo = chatIo;
+  req.staffIo = staffIo;
+  req.notificationIo = notificationIo;
 
-    next();
+  next();
 });
 
 // TODO: add validation https://express-validator.github.io/docs/
