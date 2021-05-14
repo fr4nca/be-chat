@@ -75,7 +75,6 @@ export default {
         });
 
         if (created || not.status === 1) {
-          console.log("NOTIFICA FILHADAPUTA");
           not.status = 0;
           not.save();
 
