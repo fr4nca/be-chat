@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
     host: config.host,
     port: config.port,
     define: config.define,
+    logging: false,
   },
 );
 
