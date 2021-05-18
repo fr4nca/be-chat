@@ -33,9 +33,15 @@ export default {
         is_partner,
       });
 
-      const room = "staff";
+      if (is_partner) {
+        const room = "staff";
 
-      req.staffIo?.to(room).emit("new chat", chat);
+        req.staffIo?.to(room).emit("new chat", chat);
+      } else {
+        const room = company_uuid;
+
+        req.companyIo?.to(room).emit("new chat", chat);
+      }
 
       return res.json(chat);
     } catch (e) {

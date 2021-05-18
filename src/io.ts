@@ -39,6 +39,19 @@ const staffNamespace = (io: Server): Namespace => {
   return staffIo;
 };
 
+const companyNamespace = (io: Server): Namespace => {
+  const staffIo = io.of("/company");
+
+  staffIo.on("connection", async (socket: Socket) => {
+    const { company } = socket.handshake.query;
+    const room = company;
+
+    if (room) socket.join(room);
+  });
+
+  return staffIo;
+};
+
 const notificationNamespace = (io: Server): Namespace => {
   const notificationIo = io.of("/notification");
 
@@ -69,6 +82,7 @@ export default (server: http.Server): Namespace[] => {
   const chatIo = chatNamespace(io);
   const staffIo = staffNamespace(io);
   const notificationIo = notificationNamespace(io);
+  const companyIo = companyNamespace(io);
 
-  return [chatIo, staffIo, notificationIo];
+  return [chatIo, staffIo, notificationIo, companyIo];
 };

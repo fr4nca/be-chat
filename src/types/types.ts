@@ -5,4 +5,5 @@ export interface IRequest extends Request {
   chatIo?: Namespace;
   staffIo?: Namespace;
   notificationIo?: Namespace;
+  companyIo?: Namespace;
 }

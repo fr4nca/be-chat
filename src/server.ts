@@ -21,7 +21,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 const server = http.createServer(app);
 
-const [chatIo, staffIo, notificationIo] = createIo(server);
+const [chatIo, staffIo, notificationIo, companyIo] = createIo(server);
 
 // pass io connections through to routes
 // eslint-disable-next-line consistent-return
@@ -34,6 +34,7 @@ app.use((req: IRequest, res: Response, next) => {
   req.chatIo = chatIo;
   req.staffIo = staffIo;
   req.notificationIo = notificationIo;
+  req.companyIo = companyIo;
 
   next();
 });
