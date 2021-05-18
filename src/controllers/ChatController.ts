@@ -17,6 +17,7 @@ export default {
       team,
       resource_id,
       resource_type,
+      is_partner,
     } = req.body;
 
     try {
@@ -29,6 +30,7 @@ export default {
         team,
         resource_id,
         resource_type,
+        is_partner,
       });
 
       const room = "staff";

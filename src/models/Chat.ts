@@ -17,6 +17,7 @@ interface IChatAttributes {
   team: number;
   resource_id: number;
   resource_type: string;
+  is_partner: boolean;
 
   messages?: Message[];
 }
@@ -46,6 +47,7 @@ class Chat
   public resource_id!: number;
   public team!: number;
   public open!: boolean;
+  public is_partner!: boolean;
   public messages!: Message[];
 
   public readonly createdAt!: Date;
@@ -69,6 +71,7 @@ Chat.init(
     resource_id: DataTypes.INTEGER,
     team: DataTypes.INTEGER,
     open: DataTypes.BOOLEAN,
+    is_partner: DataTypes.BOOLEAN,
   },
   {
     sequelize,
