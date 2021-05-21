@@ -1,5 +1,4 @@
 {
     "debug": true,
-    "uploadsUrl": "https://deadpool.cloudez.io/uploads/",
     "apiUrl": "http://localhost:8000/"
 }
